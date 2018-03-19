@@ -1,2 +1,2 @@
 * linguist-vendored
-*.cu linguist-language=false
+*.cu linguist-language=true
