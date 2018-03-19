@@ -7,7 +7,7 @@ CUDA based parallel computation of the 2D spatial convolution. The Thrust C++ te
 
 * The Python 3 Jupyter notebook [Spatial_Convolution_GHQ.ipynb](Spatial_Convolution_GHQ.ipynb) can be used on the Google colaboratory platform. 
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/https://github.com/kk17m/CUDA-Spatial-Convolution-Gauss-Hermite-Quadrature/blob/master/Spatial_Convolution_GHQ.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kk17m/CUDA-Spatial-Convolution-Gauss-Hermite-Quadrature/blob/master/Spatial_Convolution_GHQ.ipynb)
 
 * The nodes and weights are stored as list of lists using bidimensional arrays. The Golub–Welsch algorithm can be used to compute the Hermite nodes (roots of the Hermite polynomials) in the interval (-inf, inf).  
 
