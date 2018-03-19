@@ -1,2 +1,2 @@
-*.cu linguist-vendored=false
+*.cu linguist-language=Cuda
 *.nb linguist-language=Mathematica
