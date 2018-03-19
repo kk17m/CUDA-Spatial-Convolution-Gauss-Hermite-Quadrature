@@ -9,7 +9,7 @@ CUDA based parallel computation of the 2D spatial convolution. The Thrust C++ te
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kk17m/CUDA-Spatial-Convolution-Gauss-Hermite-Quadrature/blob/master/Spatial_Convolution_GHQ.ipynb)
 
-* The nodes and weights are stored as list of lists using bidimensional arrays. The Golub–Welsch algorithm can be used to compute the Hermite nodes (roots of the Hermite polynomials) in the interval (-inf, inf). The mathematica nootbook [Nodes-weights-Gauss-Hermite.nb](Nodes-weights-Gauss-Hermite.nb) can be used to compute the Gauss-Hermite nodes and weights. The weighting function <a href="https://www.codecogs.com/eqnedit.php?latex=\exp(x^2)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\exp(x^2)" title="\exp(x^2)" /></a>  
+* The nodes and weights are stored as list of lists using bidimensional arrays. The Golub–Welsch algorithm can be used to compute the Hermite nodes (roots of the Hermite polynomials) in the interval (-inf, inf). The mathematica nootbook [Nodes-weights-Gauss-Hermite.nb](Nodes-weights-Gauss-Hermite.nb) can be used to compute the Gauss-Hermite nodes and weights. The weighting function  <a href="https://www.codecogs.com/eqnedit.php?latex=\exp(x^2)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\exp(x^2)" title="\exp(x^2)" /></a>  
 
 ### Future Extensions
 
