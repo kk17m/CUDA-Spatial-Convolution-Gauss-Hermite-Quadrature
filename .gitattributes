@@ -1,2 +1,2 @@
-static/* linguist-vendored
-*.cu linguist-language=CUDA
+* linguist-vendored
+*.cu linguist-language=false
