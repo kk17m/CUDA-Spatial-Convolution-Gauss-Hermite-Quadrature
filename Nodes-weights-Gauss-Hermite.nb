@@ -1,0 +1,593 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     19222,        585]
+NotebookOptionsPosition[     18827,        566]
+NotebookOutlinePosition[     19175,        581]
+CellTagsIndexPosition[     19132,        578]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[TextData[{
+ StyleBox[" ",
+  FontSize->24],
+ StyleBox["Gauss Hermite quadrature nodes and weights with the weighting \
+function ",
+  FontSize->24,
+  FontVariations->{"Underline"->True}],
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"exp", "(", 
+    SuperscriptBox["x", "2"], ")"}], TraditionalForm]],
+  FontSize->24,
+  FontVariations->{"Underline"->True}],
+ StyleBox[" absorbed in the weights",
+  FontSize->24,
+  FontVariations->{"Underline"->True}],
+ StyleBox["  ",
+  FontSize->24]
+}], "Title",
+ CellChangeTimes->{{3.758887069724594*^9, 3.7588870960070972`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"Golub", "-", 
+     RowBox[{"Welsch", " ", "algorithm"}]}], ",", " ", 
+    RowBox[{
+     RowBox[{"https", ":"}], "//", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"math", ".", "stackexchange", ".", "com"}], "/", "users"}], 
+        "/", "498"}], "/", "j"}], "-", "m", "-", "is", "-", "not", "-", "a", 
+      "-", "mathematician"}]}], ",", "  ", "\[IndentingNewLine]", "   ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"URL", " ", 
+       RowBox[{"(", 
+        RowBox[{"version", ":", 
+         RowBox[{"2012", "-", "08", "-", "09"}]}], ")"}]}], ":", "https", 
+      ":"}], "//", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"math", ".", "stackexchange", ".", "com"}], "/", "q"}], "/", 
+      "180526"}]}]}], " ", "*)"}], "  ", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"golubWelsch", "[", 
+     RowBox[{
+      RowBox[{"d_", "?", "VectorQ"}], ",", 
+      RowBox[{"e_", "?", "VectorQ"}]}], "]"}], ":=", 
+    RowBox[{"Transpose", "[", 
+     RowBox[{"MapAt", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"First", "[", "e", "]"}], " ", 
+          RowBox[{
+           RowBox[{"Map", "[", 
+            RowBox[{"First", ",", "#"}], "]"}], "^", "2"}]}], ")"}], "&"}], 
+       ",", 
+       RowBox[{"Eigensystem", "[", 
+        RowBox[{"SparseArray", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"Band", "[", 
+              RowBox[{"{", 
+               RowBox[{"1", ",", "1"}], "}"}], "]"}], "\[Rule]", "d"}], ",", 
+            RowBox[{
+             RowBox[{"Band", "[", 
+              RowBox[{"{", 
+               RowBox[{"1", ",", "2"}], "}"}], "]"}], "\[Rule]", 
+             RowBox[{"Sqrt", "[", 
+              RowBox[{"Rest", "[", "e", "]"}], "]"}]}], ",", 
+            RowBox[{
+             RowBox[{"Band", "[", 
+              RowBox[{"{", 
+               RowBox[{"2", ",", "1"}], "}"}], "]"}], "\[Rule]", 
+             RowBox[{"Sqrt", "[", 
+              RowBox[{"Rest", "[", "e", "]"}], "]"}]}]}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"Length", "[", "d", "]"}], ",", 
+            RowBox[{"Length", "[", "d", "]"}]}], "}"}]}], "]"}], "]"}], ",", 
+       RowBox[{"{", "2", "}"}]}], "]"}], "]"}]}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"generate", " ", "nodes", " ", 
+      SubscriptBox["n", "i"], " ", "and", " ", 
+      SubscriptBox["w", "i"], "*", "exp", 
+      RowBox[{"(", 
+       SuperscriptBox[
+        SubscriptBox["n", "i"], "2"], ")"}], " ", "for", " ", "Gauss"}], "-", 
+     RowBox[{
+     "Hermite", " ", "quadrature", " ", "with", " ", "the", " ", "required", 
+      " ", "precision"}]}], "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"ghq", "[", 
+     RowBox[{"n_Integer", ",", 
+      RowBox[{"prec_:", " ", "MachinePrecision"}]}], "]"}], ":=", 
+    RowBox[{"Sort", "[", 
+     RowBox[{"golubWelsch", "[", 
+      RowBox[{
+       RowBox[{"ConstantArray", "[", 
+        RowBox[{"0", ",", "n"}], "]"}], ",", 
+       RowBox[{"N", "[", 
+        RowBox[{
+         RowBox[{"Prepend", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"Range", "[", 
+             RowBox[{"n", "-", "1"}], "]"}], "/", "2"}], ",", 
+           RowBox[{"Sqrt", "[", "Pi", "]"}]}], "]"}], ",", "prec"}], "]"}]}], 
+      "]"}], "]"}]}], "\t", "\[IndentingNewLine]", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"n", ",", "nodes", ",", "weights"}], "}"}], ",", 
+     "\[IndentingNewLine]", "                 ", 
+     RowBox[{
+      RowBox[{"n", "=", "36"}], ";", "\[IndentingNewLine]", 
+      "                 ", 
+      RowBox[{"nodes", " ", "=", " ", 
+       RowBox[{
+        RowBox[{"ghq", "[", "n", "]"}], "[", 
+        RowBox[{"[", 
+         RowBox[{"All", ",", "1"}], "]"}], "]"}]}], ";", 
+      "\[IndentingNewLine]", "\t        ", 
+      RowBox[{"weights", " ", "=", " ", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"ghq", "[", "n", "]"}], "[", 
+         RowBox[{"[", 
+          RowBox[{"All", ",", "2"}], "]"}], "]"}], 
+        RowBox[{"Exp", "[", 
+         SuperscriptBox[
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"ghq", "[", "n", "]"}], "[", 
+            RowBox[{"[", 
+             RowBox[{"All", ",", "1"}], "]"}], "]"}], ")"}], "2"], "]"}]}]}], 
+      ";", "\[IndentingNewLine]", "\t        ", 
+      RowBox[{"Style", "[", 
+       RowBox[{
+        RowBox[{"MapThread", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"Riffle", "[", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{"CForm", "[", "#1", "]"}], "}"}], ",", 
+             RowBox[{"{", 
+              RowBox[{"CForm", "[", "#2", "]"}], "}"}]}], "]"}], "&"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"nodes", ",", "weights"}], "}"}], ",", "1"}], "]"}], ",", 
+        RowBox[{"PrintPrecision", "\[Rule]", "12"}]}], "]"}]}]}], "]"}], 
+   "\n"}]}]], "Input",
+ CellChangeTimes->{{3.758835656550435*^9, 3.7588358013147154`*^9}, {
+  3.758836248313282*^9, 3.758836278064984*^9}, {3.758836309716794*^9, 
+  3.7588363238046*^9}, {3.7588386970993443`*^9, 3.758838812967972*^9}, {
+  3.7588388707252755`*^9, 3.758838890409401*^9}, {3.758886353506629*^9, 
+  3.758886387757588*^9}, {3.758886891154381*^9, 3.75888700303078*^9}}],
+
+Cell[BoxData[
+ StyleBox[
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      InterpretationBox["\<\"-7.626325754003896\"\>",
+       CForm[-7.626325754003896],
+       AutoDelete->True,
+       Editable->True], ",", 
+      InterpretationBox["\<\"0.8072646660353702\"\>",
+       CForm[0.8072646660353702],
+       AutoDelete->True,
+       Editable->True]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      InterpretationBox["\<\"-6.925598990259945\"\>",
+       CForm[-6.925598990259945],
+       AutoDelete->True,
+       Editable->True], ",", 
+      InterpretationBox["\<\"0.626482063538593\"\>",
+       CForm[0.626482063538593],
+       AutoDelete->True,
+       Editable->True]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      InterpretationBox["\<\"-6.342243330994417\"\>",
+       CForm[-6.342243330994417],
+       AutoDelete->True,
+       Editable->True], ",", 
+      InterpretationBox["\<\"0.5482379054346118\"\>",
+       CForm[0.5482379054346118],
+       AutoDelete->True,
+       Editable->True]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      InterpretationBox["\<\"-5.818863279505579\"\>",
+       CForm[-5.818863279505579],
+       AutoDelete->True,
+       Editable->True], ",", 
+      InterpretationBox["\<\"0.5018952690514574\"\>",
+       CForm[0.5018952690514574],
+       AutoDelete->True,
+       Editable->True]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      InterpretationBox["\<\"-5.3335601071130645\"\>",
+       CForm[-5.3335601071130645`],
+       AutoDelete->True,
+       Editable->True], ",", 
+      InterpretationBox["\<\"0.4705108735743688\"\>",
+       CForm[0.4705108735743688],
+       AutoDelete->True,
+       Editable->True]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      InterpretationBox["\<\"-4.875039972467083\"\>",
+       CForm[-4.875039972467083],
+       AutoDelete->True,
+       Editable->True], ",", 
+      InterpretationBox["\<\"0.4476297837537447\"\>",
+       CForm[0.4476297837537447],
+       AutoDelete->True,
+       Editable->True]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      InterpretationBox["\<\"-4.436506970192858\"\>",
+       CForm[-4.436506970192858],
+       AutoDelete->True,
+       Editable->True], ",", 
+      InterpretationBox["\<\"0.4301720223313478\"\>",
+       CForm[0.4301720223313478],
+       AutoDelete->True,
+       Editable->True]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      InterpretationBox["\<\"-4.013456567749471\"\>",
+       CForm[-4.013456567749471],
+       AutoDelete->True,
+       Editable->True], ",", 
+      InterpretationBox["\<\"0.41645347099886904\"\>",
+       CForm[0.41645347099886904`],
+       AutoDelete->True,
+       Editable->True]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      InterpretationBox["\<\"-3.6026938571484726\"\>",
+       CForm[-3.6026938571484726`],
+       AutoDelete->True,
+       Editable->True], ",", 
+      InterpretationBox["\<\"0.4054649988533432\"\>",
+       CForm[0.4054649988533432],
+       AutoDelete->True,
+       Editable->True]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      InterpretationBox["\<\"-3.201833945788157\"\>",
+       CForm[-3.201833945788157],
+       AutoDelete->True,
+       Editable->True], ",", 
+      InterpretationBox["\<\"0.3965612262672993\"\>",
+       CForm[0.3965612262672993],
+       AutoDelete->True,
+       Editable->True]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      InterpretationBox["\<\"-2.8090222351311054\"\>",
+       CForm[-2.8090222351311054`],
+       AutoDelete->True,
+       Editable->True], ",", 
+      InterpretationBox["\<\"0.38930924155705054\"\>",
+       CForm[0.38930924155705054`],
+       AutoDelete->True,
+       Editable->True]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      InterpretationBox["\<\"-2.422766042053559\"\>",
+       CForm[-2.422766042053559],
+       AutoDelete->True,
+       Editable->True], ",", 
+      InterpretationBox["\<\"0.3834083398416976\"\>",
+       CForm[0.3834083398416976],
+       AutoDelete->True,
+       Editable->True]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      InterpretationBox["\<\"-2.0418271835544166\"\>",
+       CForm[-2.0418271835544166`],
+       AutoDelete->True,
+       Editable->True], ",", 
+      InterpretationBox["\<\"0.3786444980895176\"\>",
+       CForm[0.3786444980895176],
+       AutoDelete->True,
+       Editable->True]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      InterpretationBox["\<\"-1.6651500018434104\"\>",
+       CForm[-1.6651500018434104`],
+       AutoDelete->True,
+       Editable->True], ",", 
+      InterpretationBox["\<\"0.3748631855184457\"\>",
+       CForm[0.3748631855184457],
+       AutoDelete->True,
+       Editable->True]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      InterpretationBox["\<\"-1.2918109588209203\"\>",
+       CForm[-1.2918109588209203`],
+       AutoDelete->True,
+       Editable->True], ",", 
+      InterpretationBox["\<\"0.3719524810189278\"\>",
+       CForm[0.3719524810189278],
+       AutoDelete->True,
+       Editable->True]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      InterpretationBox["\<\"-0.9209818015707496\"\>",
+       CForm[-0.9209818015707496],
+       AutoDelete->True,
+       Editable->True], ",", 
+      InterpretationBox["\<\"0.36983231208820944\"\>",
+       CForm[0.36983231208820944`],
+       AutoDelete->True,
+       Editable->True]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      InterpretationBox["\<\"-0.5519014332904186\"\>",
+       CForm[-0.5519014332904186],
+       AutoDelete->True,
+       Editable->True], ",", 
+      InterpretationBox["\<\"0.36844752436798417\"\>",
+       CForm[0.36844752436798417`],
+       AutoDelete->True,
+       Editable->True]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      InterpretationBox["\<\"-0.18385336710581246\"\>",
+       CForm[-0.18385336710581246`],
+       AutoDelete->True,
+       Editable->True], ",", 
+      InterpretationBox["\<\"0.3677634858284455\"\>",
+       CForm[0.3677634858284455],
+       AutoDelete->True,
+       Editable->True]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      InterpretationBox["\<\"0.18385336710581512\"\>",
+       CForm[0.18385336710581512`],
+       AutoDelete->True,
+       Editable->True], ",", 
+      InterpretationBox["\<\"0.36776348582843993\"\>",
+       CForm[0.36776348582843993`],
+       AutoDelete->True,
+       Editable->True]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      InterpretationBox["\<\"0.5519014332904222\"\>",
+       CForm[0.5519014332904222],
+       AutoDelete->True,
+       Editable->True], ",", 
+      InterpretationBox["\<\"0.3684475243679883\"\>",
+       CForm[0.3684475243679883],
+       AutoDelete->True,
+       Editable->True]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      InterpretationBox["\<\"0.9209818015707576\"\>",
+       CForm[0.9209818015707576],
+       AutoDelete->True,
+       Editable->True], ",", 
+      InterpretationBox["\<\"0.3698323120882103\"\>",
+       CForm[0.3698323120882103],
+       AutoDelete->True,
+       Editable->True]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      InterpretationBox["\<\"1.2918109588209283\"\>",
+       CForm[1.2918109588209283`],
+       AutoDelete->True,
+       Editable->True], ",", 
+      InterpretationBox["\<\"0.3719524810189504\"\>",
+       CForm[0.3719524810189504],
+       AutoDelete->True,
+       Editable->True]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      InterpretationBox["\<\"1.6651500018434149\"\>",
+       CForm[1.6651500018434149`],
+       AutoDelete->True,
+       Editable->True], ",", 
+      InterpretationBox["\<\"0.3748631855184701\"\>",
+       CForm[0.3748631855184701],
+       AutoDelete->True,
+       Editable->True]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      InterpretationBox["\<\"2.0418271835544193\"\>",
+       CForm[2.0418271835544193`],
+       AutoDelete->True,
+       Editable->True], ",", 
+      InterpretationBox["\<\"0.3786444980895354\"\>",
+       CForm[0.3786444980895354],
+       AutoDelete->True,
+       Editable->True]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      InterpretationBox["\<\"2.4227660420535626\"\>",
+       CForm[2.4227660420535626`],
+       AutoDelete->True,
+       Editable->True], ",", 
+      InterpretationBox["\<\"0.38340833984170997\"\>",
+       CForm[0.38340833984170997`],
+       AutoDelete->True,
+       Editable->True]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      InterpretationBox["\<\"2.8090222351311027\"\>",
+       CForm[2.8090222351311027`],
+       AutoDelete->True,
+       Editable->True], ",", 
+      InterpretationBox["\<\"0.38930924155705887\"\>",
+       CForm[0.38930924155705887`],
+       AutoDelete->True,
+       Editable->True]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      InterpretationBox["\<\"3.2018339457881595\"\>",
+       CForm[3.2018339457881595`],
+       AutoDelete->True,
+       Editable->True], ",", 
+      InterpretationBox["\<\"0.3965612262673096\"\>",
+       CForm[0.3965612262673096],
+       AutoDelete->True,
+       Editable->True]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      InterpretationBox["\<\"3.6026938571484743\"\>",
+       CForm[3.6026938571484743`],
+       AutoDelete->True,
+       Editable->True], ",", 
+      InterpretationBox["\<\"0.40546499885337384\"\>",
+       CForm[0.40546499885337384`],
+       AutoDelete->True,
+       Editable->True]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      InterpretationBox["\<\"4.013456567749469\"\>",
+       CForm[4.013456567749469],
+       AutoDelete->True,
+       Editable->True], ",", 
+      InterpretationBox["\<\"0.4164534709988875\"\>",
+       CForm[0.4164534709988875],
+       AutoDelete->True,
+       Editable->True]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      InterpretationBox["\<\"4.436506970192857\"\>",
+       CForm[4.436506970192857],
+       AutoDelete->True,
+       Editable->True], ",", 
+      InterpretationBox["\<\"0.4301720223313582\"\>",
+       CForm[0.4301720223313582],
+       AutoDelete->True,
+       Editable->True]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      InterpretationBox["\<\"4.875039972467084\"\>",
+       CForm[4.875039972467084],
+       AutoDelete->True,
+       Editable->True], ",", 
+      InterpretationBox["\<\"0.4476297837537804\"\>",
+       CForm[0.4476297837537804],
+       AutoDelete->True,
+       Editable->True]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      InterpretationBox["\<\"5.333560107113062\"\>",
+       CForm[5.333560107113062],
+       AutoDelete->True,
+       Editable->True], ",", 
+      InterpretationBox["\<\"0.4705108735743989\"\>",
+       CForm[0.4705108735743989],
+       AutoDelete->True,
+       Editable->True]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      InterpretationBox["\<\"5.8188632795055755\"\>",
+       CForm[5.8188632795055755`],
+       AutoDelete->True,
+       Editable->True], ",", 
+      InterpretationBox["\<\"0.5018952690514803\"\>",
+       CForm[0.5018952690514803],
+       AutoDelete->True,
+       Editable->True]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      InterpretationBox["\<\"6.342243330994413\"\>",
+       CForm[6.342243330994413],
+       AutoDelete->True,
+       Editable->True], ",", 
+      InterpretationBox["\<\"0.5482379054346204\"\>",
+       CForm[0.5482379054346204],
+       AutoDelete->True,
+       Editable->True]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      InterpretationBox["\<\"6.925598990259943\"\>",
+       CForm[6.925598990259943],
+       AutoDelete->True,
+       Editable->True], ",", 
+      InterpretationBox["\<\"0.6264820635385975\"\>",
+       CForm[0.6264820635385975],
+       AutoDelete->True,
+       Editable->True]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      InterpretationBox["\<\"7.6263257540038945\"\>",
+       CForm[7.6263257540038945`],
+       AutoDelete->True,
+       Editable->True], ",", 
+      InterpretationBox["\<\"0.8072646660353738\"\>",
+       CForm[0.8072646660353738],
+       AutoDelete->True,
+       Editable->True]}], "}"}]}], "}"}],
+  StripOnInput->False,
+  PrintPrecision->12]], "Output",
+ CellChangeTimes->{{3.758835686623155*^9, 3.7588356980668097`*^9}, {
+   3.758835729316597*^9, 3.758835745675533*^9}, {3.758835780102502*^9, 
+   3.7588358023637753`*^9}, 3.7588362788040257`*^9, 3.7588363246556487`*^9, 
+   3.7588387995512047`*^9, {3.7588388760115776`*^9, 3.75883889248952*^9}}]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1366, 686},
+WindowMargins->{{-8, Automatic}, {Automatic, -8}},
+FrontEndVersion->"11.0 for Microsoft Windows (64-bit) (September 21, 2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 559, 19, 74, "Title"],
+Cell[CellGroupData[{
+Cell[1164, 45, 5406, 146, 287, "Input"],
+Cell[6573, 193, 12226, 369, 183, "Output"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
