@@ -3,9 +3,11 @@ CUDA based fast numerical method to compute two dimensional spatial convolution 
 
 ## Description
 
-CUDA based parallel computation of the 2D spatial convolution. Thrust libraries are used. 
+CUDA based parallel computation of the 2D spatial convolution. The Thrust C++ tempelate libraries are used here for abstraction and performace. 
 
-* Google colaboratory NVIDIA K80 
+* The Python 3 Jupyter notebook [Spatial_Convolution_GHQ.ipynb](Spatial_Convolution_GHQ.ipynb) can be used on the Google colaboratory platform. 
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/https://github.com/kk17m/CUDA-Spatial-Convolution-Gauss-Hermite-Quadrature/blob/master/Spatial_Convolution_GHQ.ipynb)
 
 * The nodes and weights are stored as list of lists using bidimensional arrays. The Golub–Welsch algorithm can be used to compute the Hermite nodes (roots of the Hermite polynomials) in the interval (-inf, inf).  
 
