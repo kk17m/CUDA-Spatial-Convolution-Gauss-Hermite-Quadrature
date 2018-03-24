@@ -3,9 +3,9 @@ CUDA based fast numerical method to compute two dimensional spatial convolution 
 
 ## Description
 
-CUDA based parallel computation of the 2D spatial convolution. The Thrust C++ tempelate libraries are used here for abstraction and performace. 
+CUDA based parallel computation of the 2D spatial convolution. The Thrust C++ tempelate libraries are used here for abstraction and performace. The spatial convolution algorithm is implemented in the CUDA kernel file [SpatialConvolutionGHQ.cu](SpatialConvolutionGHQ.cu) and the Jupyter nootbook [Spatial_Convolution_GHQ.ipynb](Spatial_Convolution_GHQ.ipynb).
 
-* The Python 3 Jupyter notebook [Spatial_Convolution_GHQ.ipynb](Spatial_Convolution_GHQ.ipynb) can be used on the Google colaboratory platform. 
+* The Python 3 Jupyter notebook [Spatial_Convolution_GHQ.ipynb](Spatial_Convolution_GHQ.ipynb) can be used on the Google colaboratory cloud service that provides a free access to the NVIDIA Tesla K80 GPU. 
 
   [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kk17m/CUDA-Spatial-Convolution-Gauss-Hermite-Quadrature/blob/master/Spatial_Convolution_GHQ.ipynb)
 
