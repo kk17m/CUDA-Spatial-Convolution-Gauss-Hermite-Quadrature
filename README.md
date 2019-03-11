@@ -16,5 +16,16 @@ CUDA based parallel computation of the 2D spatial convolution. The Thrust C++ te
 
 * Fast implementation of the Golub–Welsch algorithm to directly generate the Hermite nodes and weights for the Gauss-Hermite quadrature. 
 
+### References
+
+* Davis, P.J., and P. Rabinowitz. 1984. Methods of Numerical Integration. Academic Press.
+
+* Jäckel, P. 2005. “A Note on Multivariate Gauss-Hermite Quadrature.” Mimeo.
+
+*  G. H. Golub and J. H. Welsch, Calculation of Gauss quadrature rules, Math. Comp. 23 (1969),
+221–230
+
+* Hale, N., Townsend, A.: Fast and accurate computation of Gauss–Legendre and Gauss–Jacobi quadrature nodes and weights. SISC 35, A652—A672 (2013)
+
 ## License & Copyright
 Licensed under the [MIT License](LICENSE)
